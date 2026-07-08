@@ -65,8 +65,8 @@
     /* One card recipe */
     --surface: linear-gradient(180deg, rgba(44,56,82,0.34), rgba(20,28,46,0.34));
     --surface-flat: rgba(28,42,63,0.45);
-    --border: rgba(148,163,184,0.1);
-    --border-2: rgba(148,163,184,0.15);
+    --border: rgba(165,184,255,0.1);
+    --border-2: rgba(165,184,255,0.16);
     --edge: rgba(255,255,255,0.06);
     --shadow-sm: 0 1px 2px rgba(2,6,16,0.4), 0 8px 20px rgba(2,6,16,0.3);
     --shadow-md: 0 2px 4px rgba(2,6,16,0.45), 0 16px 38px rgba(2,6,16,0.38);
@@ -340,9 +340,19 @@
   .badge-ico { width: 21px; height: 21px; }
   .compat-note { text-align: center; margin-top: 30px; font-size: 0.88rem; color: var(--muted); opacity: 0.9; }
 
-  /* Features (compact) */
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  /* Features — primary row + quieter secondary grid */
+  .features-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+  .feature-lg { padding: 28px 24px; }
+  .feature-lg .icon { width: 46px; height: 46px; }
+  .feature-lg .icon svg { width: 22px; height: 22px; }
+  .feature-lg h3 { font-size: 1.06rem; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .card { padding: 24px 22px; }
+  .features .card { padding: 20px 20px; }
+  .features .card .icon { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 13px; }
+  .features .card .icon svg { width: 18px; height: 18px; }
+  .features .card h3 { font-size: 0.98rem; }
+  .features .card p { font-size: 0.89rem; }
   .card .icon {
     width: 42px; height: 42px; border-radius: 12px; margin-bottom: 16px;
     display: flex; align-items: center; justify-content: center;
@@ -459,10 +469,10 @@
   .amt { font-family: var(--font-display); font-size: 2.9rem; font-weight: 600; color: var(--heading); letter-spacing: -0.03em; line-height: 1; }
   .amt .per { font-size: 1rem; color: var(--muted); font-weight: 500; letter-spacing: 0; font-family: var(--font-body); }
   .price-card .sub2 { margin: 14px 0 26px; color: var(--muted); font-size: 0.96rem; }
-  .price-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .price-card li { display: flex; gap: 11px; font-size: 0.96rem; align-items: flex-start; color: var(--body); }
-  .price-them li { color: var(--muted); }
-  .strike { text-decoration: line-through; opacity: 0.55; }
+  .price-card ul.inc { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 11px 16px; }
+  .price-card ul.inc li { display: flex; gap: 9px; font-size: 0.94rem; align-items: flex-start; color: var(--body); }
+  .price-card ul.inc li span { color: var(--accent-2); }
+  .price-them .sub2 { margin-bottom: 0; }
   .price-us .cta { margin-top: 30px; display: block; text-align: center;
     background: linear-gradient(135deg, var(--indigo-500), var(--indigo-400)); color: #fff;
     padding: 14px; border-radius: 13px; font-weight: 600; font-size: 0.98rem; font-family: var(--font-display);
@@ -546,7 +556,7 @@
   .disclaimer { color: var(--muted); font-size: 0.8rem; max-width: 62ch; margin-top: 10px; opacity: 0.8; }
 
   /* Reveal */
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 1.05s var(--ease), transform 1.05s var(--ease); }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
   .reveal.in { opacity: 1; transform: none; }
 
   /* Responsive */
@@ -556,7 +566,7 @@
     .hero h1 { margin-left: auto; margin-right: auto; }
     .hero .sub { margin-left: auto; margin-right: auto; }
     .cta-row { align-items: center; }
-    .features { grid-template-columns: repeat(2, 1fr); }
+    .features, .features-top { grid-template-columns: repeat(2, 1fr); }
     .blend-grid { grid-template-columns: repeat(2, 1fr); }
     .compare, .pricing-inner, .privacy-grid { grid-template-columns: 1fr; }
     .numbers-grid { grid-template-columns: repeat(2, 1fr); gap: 26px 18px; }
@@ -565,7 +575,7 @@
   }
   @media (max-width: 620px) {
     .nav-links { display: none; }
-    .features, .blend-grid { grid-template-columns: 1fr; }
+    .features, .features-top, .blend-grid { grid-template-columns: 1fr; }
     .phone { width: 272px; height: 566px; }
     .nav-cta { padding: 8px 14px; font-size: 0.83rem; }
     .cat-badges { gap: 18px 14px; }
@@ -620,14 +630,14 @@
         <img src="moon.png" alt="SleepBlend crescent moon" />
       </div>
       <h1 class="reveal">Sleep sounds that <span class="accent">play all night.</span></h1>
-      <p class="sub reveal">A calm, offline sound mixer engineered to keep playing until morning — never cutting out at 3am.</p>
+      <p class="sub reveal">An offline Android sound mixer built to keep playing until morning. No ads. No subscription. No account.</p>
       <div class="cta-row reveal">
         <span class="play-badge soon" aria-label="Coming soon to Google Play">
           <svg width="26" height="28" viewBox="0 0 512 512" aria-hidden="true"><path fill="#00D3FF" d="M47 24C40 28 36 36 36 47v418c0 11 4 19 11 23l236-232L47 24z"/><path fill="#00F076" d="M47 24l236 232 66-65L83 12C69 4 56 6 47 24z"/><path fill="#FF3A44" d="M349 191l-66 65 66 65 84-49c17-12 17-32 0-44l-84-37z"/><path fill="#FFC800" d="M283 256L47 488c9 18 22 20 36 12l266-154-66-90z"/></svg>
           <span class="ptext"><span class="pt-small">Coming soon to</span><span class="pt-big">Google Play</span></span>
         </span>
         <a class="notify-link" href="mailto:makecoolstuff8@gmail.com?subject=Notify%20me%20when%20SleepBlend%20launches">Get notified at launch<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <p class="trust-line">Works offline<span class="sep">·</span>No ads<span class="sep">·</span>No subscription<span class="sep">·</span>No account<span class="sep">·</span><b>$1.99 once</b></p>
+        <p class="trust-line">Works offline<span class="sep">·</span>No internet permission<span class="sep">·</span>Every sound unlocked<span class="sep">·</span><b>$1.99 once</b></p>
       </div>
     </div>
 
@@ -730,27 +740,34 @@
       <h2>Quality over quantity</h2>
       <p>Fifteen excellent sounds and the tools to make the one you love yours forever.</p>
     </div>
-    <div class="features">
-      <div class="card cardbase">
+    <div class="features-top">
+      <div class="card cardbase feature-lg">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 019.5 4a7 7 0 108.5 10.5z"/></svg></div>
+        <h3>Plays all night</h3>
+        <p>A foreground service and wake lock keep your mix going until morning.</p>
+      </div>
+      <div class="card cardbase feature-lg">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C8FF8" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2.4" fill="#0A0E1A"/><circle cx="15" cy="12" r="2.4" fill="#0A0E1A"/><circle cx="7" cy="18" r="2.4" fill="#0A0E1A"/></svg></div>
         <h3>Layered mixer</h3>
-        <p>Blend up to 10 sounds with individual volume sliders until the mix is exactly right.</p>
+        <p>Blend up to 10 sounds with individual volume sliders.</p>
       </div>
-      <div class="card cardbase">
+      <div class="card cardbase feature-lg">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v12H4z"/><path d="M4 7l3-3h10l3 3"/><path d="M9 12h6"/></svg></div>
         <h3>Save your blends</h3>
         <p>Name a mix once, replay it in one tap every night.</p>
       </div>
+      <div class="card cardbase feature-lg">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#67E8F9" stroke-width="1.7" stroke-linecap="round"><path d="M3 12c3-7 6-7 9 0s6 7 9 0"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" opacity="0.5"/></svg></div>
+        <h3>Tunable noise</h3>
+        <p>A warmth slider morphs live noise from bright white to deep brown.</p>
+      </div>
+    </div>
+    <div class="features">
       <div class="card cardbase">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9F7AEA" stroke-width="1.7" stroke-linecap="round"><path d="M2 12h3l2-6 4 12 3-9 2 3h6"/></svg></div>
         <h3>Brainwave beats</h3>
-        <p>Real-time binaural beats and isochronic tones, 5 presets — synthesized, so they loop seamlessly.</p>
+        <p>Synthesized binaural beats and isochronic tones, 5 presets.</p>
         <span class="note">Use headphones for binaural</span>
-      </div>
-      <div class="card cardbase">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#67E8F9" stroke-width="1.7" stroke-linecap="round"><path d="M3 12c3-7 6-7 9 0s6 7 9 0"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" opacity="0.5"/></svg></div>
-        <h3>Tunable noise</h3>
-        <p>A live noise generator with a warmth slider that morphs bright white into deep brown.</p>
       </div>
       <div class="card cardbase">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M5 15v4a2 2 0 002 2h10a2 2 0 002-2v-4"/></svg></div>
@@ -882,25 +899,23 @@
       <div class="price-card cardbase price-us reveal">
         <div class="price-tag">SleepBlend</div>
         <div class="amt">$1.99<span class="per"> once</span></div>
-        <p class="sub2">One purchase on Google Play. That's the whole price.</p>
-        <ul>
-          <li><span style="color:var(--accent-2)">✓</span> Every sound &amp; feature unlocked</li>
-          <li><span style="color:var(--accent-2)">✓</span> No ads &amp; no subscription</li>
-          <li><span style="color:var(--accent-2)">✓</span> No account required</li>
-          <li><span style="color:var(--accent-2)">✓</span> Free updates</li>
+        <p class="sub2">One purchase on Google Play. Everything included:</p>
+        <ul class="inc">
+          <li><span>✓</span> All 15 sounds</li>
+          <li><span>✓</span> All 13 blends</li>
+          <li><span>✓</span> Full mixer</li>
+          <li><span>✓</span> Brainwave beats</li>
+          <li><span>✓</span> Imports &amp; recordings</li>
+          <li><span>✓</span> Free updates</li>
+          <li><span>✓</span> No ads</li>
+          <li><span>✓</span> No account</li>
         </ul>
         <a class="cta" href="mailto:makecoolstuff8@gmail.com?subject=Notify%20me%20when%20SleepBlend%20launches">Coming soon — get notified at launch</a>
       </div>
       <div class="price-card cardbase price-them reveal">
-        <div class="price-tag">Subscription apps</div>
+        <div class="price-tag">Typical subscription app</div>
         <div class="amt">$59.99<span class="per"> / year</span></div>
-        <p class="sub2">Billed again next year, and the year after.</p>
-        <ul>
-          <li><span style="color:var(--muted)">✕</span> <span class="strike">$180 over three years</span></li>
-          <li><span style="color:var(--muted)">✕</span> Ads and upsells</li>
-          <li><span style="color:var(--muted)">✕</span> Sounds locked behind tiers</li>
-          <li><span style="color:var(--muted)">✕</span> Accounts &amp; data collection</li>
-        </ul>
+        <p class="sub2">About $180 over three years — with ads, locked tiers, and an account.</p>
       </div>
     </div>
   </div>
@@ -917,6 +932,10 @@
       <details class="faq-item cardbase">
         <summary>Will it really play all night?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
         <div class="fa">That's the entire reason SleepBlend exists. It runs as an Android foreground service with a wake lock, and it includes a built-in battery-optimization fix with guidance for your specific device brand — the settings that make other sleep apps go silent at 3am.</div>
+      </details>
+      <details class="faq-item cardbase">
+        <summary>Will Android battery saver stop it?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="fa">SleepBlend uses a foreground audio service and wake lock, and includes device-specific guidance for battery-optimization settings. Some Android brands are aggressive about background apps, so SleepBlend walks you through the one-time setting if your device needs it.</div>
       </details>
       <details class="faq-item cardbase">
         <summary>Is it really just $1.99? What's the catch?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -1058,7 +1077,7 @@
 
   // Reveal on scroll, with a soft stagger inside grids
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('.features, .numbers-grid, .blend-grid, .faq-list, .compare, .cat-badges').forEach(grid => {
+  document.querySelectorAll('.features-top, .features, .numbers-grid, .blend-grid, .faq-list, .compare, .cat-badges').forEach(grid => {
     [...grid.children].forEach((ch, i) => {
       ch.classList.add('reveal');
       if (!reduce) ch.style.transitionDelay = Math.min(i * 60, 420) + 'ms';
