@@ -440,6 +440,12 @@
   .loading .bplay, .sbadge.loading .circ { animation: ldpulse 1.1s ease-in-out infinite; }
   @keyframes ldpulse { 50% { transform: scale(0.93); opacity: 0.6; } }
   .blend-more { text-align: center; margin-top: 32px; font-size: 0.92rem; color: var(--muted); }
+  .blend-toggle {
+    background: none; border: none; cursor: pointer; padding: 4px 8px; margin-left: 6px;
+    font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--accent-2);
+    transition: opacity 0.25s var(--ease);
+  }
+  .blend-toggle:hover { opacity: 0.8; }
 
   /* Pricing */
   .pricing-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1.14fr 0.86fr; gap: 20px; align-items: center; }
@@ -850,8 +856,17 @@
       <div class="blend-card cardbase"><div class="be">🧠</div><h3>Deep Focus</h3><p>Brown noise for concentration and flow</p><div class="bmix"><div class="bt"><span class="bn">Brown noise</span><span class="bb"><i style="width:65%"></i></span></div></div></div>
       <div class="blend-card cardbase"><div class="be">🔥</div><h3>Cozy Fire</h3><p>Crackling fire on a rainy night</p><div class="bmix"><div class="bt"><span class="bn">Fireplace</span><span class="bb"><i style="width:65%"></i></span></div><div class="bt"><span class="bn">Rain on window</span><span class="bb"><i style="width:40%"></i></span></div></div></div>
       <div class="blend-card cardbase"><div class="be">🦗</div><h3>Summer Night</h3><p>Crickets and a gentle breeze</p><div class="bmix"><div class="bt"><span class="bn">Crickets</span><span class="bb"><i style="width:80%"></i></span></div><div class="bt"><span class="bn">Wind</span><span class="bb"><i style="width:35%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">🌲</div><h3>Forest Night</h3><p>Dense forest ambience under the stars</p><div class="bmix"><div class="bt"><span class="bn">Forest</span><span class="bb"><i style="width:65%"></i></span></div><div class="bt"><span class="bn">Rain on window</span><span class="bb"><i style="width:30%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">⬜</div><h3>Pure White</h3><p>Clean white noise — nothing else</p><div class="bmix"><div class="bt"><span class="bn">White noise</span><span class="bb"><i style="width:75%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">🌸</div><h3>Pink Fan</h3><p>Soft pink noise with fan underneath</p><div class="bmix"><div class="bt"><span class="bn">Pink noise</span><span class="bb"><i style="width:55%"></i></span></div><div class="bt"><span class="bn">Fan</span><span class="bb"><i style="width:40%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">🏔️</div><h3>Mountain Stream</h3><p>Babbling brook through a quiet forest</p><div class="bmix"><div class="bt"><span class="bn">Stream</span><span class="bb"><i style="width:75%"></i></span></div><div class="bt"><span class="bn">Forest</span><span class="bb"><i style="width:40%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">☕</div><h3>Café Focus</h3><p>Coffee shop murmur for deep concentration</p><div class="bmix"><div class="bt"><span class="bn">Coffee shop</span><span class="bb"><i style="width:70%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">🫧</div><h3>Laundry Night</h3><p>Washing machine hum — steady and hypnotic</p><div class="bmix"><div class="bt"><span class="bn">Washer</span><span class="bb"><i style="width:75%"></i></span></div><div class="bt"><span class="bn">Pink noise</span><span class="bb"><i style="width:30%"></i></span></div></div></div>
+      <div class="blend-card cardbase blend-extra" hidden><div class="be">🌬️</div><h3>Windy Forest</h3><p>Wind through the trees with light rain</p><div class="bmix"><div class="bt"><span class="bn">Wind</span><span class="bb"><i style="width:60%"></i></span></div><div class="bt"><span class="bn">Forest</span><span class="bb"><i style="width:50%"></i></span></div><div class="bt"><span class="bn">Rain on window</span><span class="bb"><i style="width:25%"></i></span></div></div></div>
     </div>
-    <p class="blend-more reveal">All 13 curated blends ship in the app — these are six favorites.</p>
+    <p class="blend-more reveal">13 curated blends included.
+      <button type="button" class="blend-toggle" id="blendToggle" aria-expanded="false">Show all 13</button>
+    </p>
   </div>
 </section>
 
@@ -1238,6 +1253,28 @@
     });
 
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopAll(); });
+  })();
+
+  // Expandable blends — quiet progressive disclosure
+  (function () {
+    const btn = document.getElementById('blendToggle');
+    if (!btn) return;
+    const extras = document.querySelectorAll('.blend-extra');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      extras.forEach((el, i) => {
+        if (expanded) {
+          el.hidden = true;
+        } else {
+          el.hidden = false;
+          // soft staggered entrance
+          el.classList.remove('in');
+          setTimeout(() => el.classList.add('in'), 40 + i * 55);
+        }
+      });
+      btn.setAttribute('aria-expanded', String(!expanded));
+      btn.textContent = expanded ? 'Show all 13' : 'Show fewer';
+    });
   })();
 
   // Starfield — very quiet
