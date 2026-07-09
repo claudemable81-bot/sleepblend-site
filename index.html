@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SleepBlend — Sleep sounds that play all night. Pay once.</title>
-<meta name="description" content="SleepBlend plays relaxing sound mixes all night on Android. No ads, no subscription, no account, fully offline. One-time $1.99." />
+<meta name="description" content="SleepBlend plays relaxing sound mixes all night on Android. No ads, no subscription, no account, fully offline. One-time $2.99." />
 <meta name="theme-color" content="#0A0E1A" id="themeColorMeta" />
 <link rel="icon" href="icon.png" />
 <meta property="og:title" content="SleepBlend — Sleep sounds that play all night" />
-<meta property="og:description" content="Engineered to keep playing all night. Pay once, $1.99. No ads, no subscription, no account." />
+<meta property="og:description" content="Engineered to keep playing all night. Pay once, $2.99. No ads, no subscription, no account." />
 <meta property="og:image" content="moon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -460,9 +460,15 @@
   .price-them { background: var(--them-bg); box-shadow: none; padding: 32px 30px; }
   .price-them:hover { transform: none; box-shadow: none; }
   .price-us { background: linear-gradient(165deg, rgba(76,110,245,0.13), rgba(125,211,252,0.05)); border-color: rgba(108,143,248,0.35); padding: 46px 42px; box-shadow: inset 0 1px 0 var(--edge), var(--shadow-md); }
-  .price-tag { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; font-weight: 600; }
+  .price-tag { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
   .price-them .price-tag { color: var(--muted); }
   .price-us .price-tag { color: var(--accent-2); }
+  .price-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .launch-pill {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent-2); background: rgba(125,211,252,0.1);
+    border: 1px solid rgba(125,211,252,0.32); border-radius: 999px; padding: 4px 11px; white-space: nowrap;
+  }
   .amt { font-family: var(--font-display); font-size: 2.9rem; font-weight: 600; color: var(--heading); letter-spacing: -0.03em; line-height: 1; }
   .amt .per { font-size: 1rem; color: var(--muted); font-weight: 500; letter-spacing: 0; font-family: var(--font-body); }
   .price-card .sub2 { margin: 14px 0 26px; color: var(--muted); font-size: 0.96rem; }
@@ -635,7 +641,7 @@
           <span class="ptext"><span class="pt-small">Coming soon to</span><span class="pt-big">Google Play</span></span>
         </span>
         <a class="notify-link" href="mailto:makecoolstuff8@gmail.com?subject=Notify%20me%20when%20SleepBlend%20launches">Get notified at launch<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <p class="trust-line">Works offline<span class="sep">·</span>No internet permission<span class="sep">·</span>Every sound unlocked<span class="sep">·</span><b>$1.99 once</b></p>
+        <p class="trust-line">Works offline<span class="sep">·</span>No internet permission<span class="sep">·</span>Every sound unlocked<span class="sep">·</span><b>$2.99 once</b></p>
       </div>
     </div>
 
@@ -652,7 +658,7 @@
 <section class="numbers">
   <div class="wrap">
     <div class="numbers-grid">
-      <div class="num"><div class="n">$1.99</div><div class="l">Pay once. Yours forever.</div></div>
+      <div class="num"><div class="n">$2.99</div><div class="l">Pay once. Yours forever.</div></div>
       <div class="num"><div class="n">0</div><div class="l">ads or tracking</div></div>
       <div class="num"><div class="n">0</div><div class="l">data sent off-device</div></div>
       <div class="num"><div class="n">15</div><div class="l">sounds · 13 blends</div></div>
@@ -677,7 +683,7 @@
         <ul>
           <li><span class="ic">✓</span> Foreground service + wake lock keep audio alive all night</li>
           <li><span class="ic">✓</span> Built-in battery-optimization fix with device-specific guidance</li>
-          <li><span class="ic">✓</span> One-time $1.99 — no subscription, ever</li>
+          <li><span class="ic">✓</span> One-time $2.99 — no subscription, ever</li>
           <li><span class="ic">✓</span> No ads, no upsells, every sound unlocked</li>
           <li><span class="ic">✓</span> No account and no internet permission at all</li>
         </ul>
@@ -895,9 +901,9 @@
     </div>
     <div class="pricing-inner">
       <div class="price-card cardbase price-us reveal">
-        <div class="price-tag">SleepBlend</div>
-        <div class="amt">$1.99<span class="per"> once</span></div>
-        <p class="sub2">One purchase on Google Play. Everything included:</p>
+        <div class="price-head"><span class="price-tag">SleepBlend</span><span class="launch-pill">Launch price</span></div>
+        <div class="amt">$2.99<span class="per"> once</span></div>
+        <p class="sub2">Introductory price for early supporters — going up after launch. Buy now and it's yours forever. Everything included:</p>
         <ul class="inc">
           <li><span>✓</span> All 15 sounds</li>
           <li><span>✓</span> All 13 blends</li>
@@ -937,8 +943,8 @@
         <div class="fa">SleepBlend uses a foreground audio service and wake lock, and includes device-specific guidance for battery-optimization settings. Some Android brands are aggressive about background apps, so SleepBlend walks you through the one-time setting if your device needs it.</div>
       </details>
       <details class="faq-item cardbase">
-        <summary>Is it really just $1.99? What's the catch?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <div class="fa">No catch. You pay $1.99 once on Google Play and everything is unlocked forever — every sound, every blend, every feature, plus updates. There is no subscription, no ads, no locked content, and no "premium" tier.</div>
+        <summary>Is it really just $2.99? What's the catch?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="fa">No catch. You pay $2.99 once on Google Play and everything is unlocked forever — every sound, every blend, every feature, plus updates. There is no subscription, no ads, no locked content, and no "premium" tier. $2.99 is an early-supporter launch price that will rise once the app has a base of reviews; if you buy at launch, that price is locked in for you for good.</div>
       </details>
       <details class="faq-item cardbase">
         <summary>Does it work offline?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -1021,7 +1027,7 @@
     <div class="foot">
       <div>
         <a class="brand" href="#top"><img src="icon.png" alt="SleepBlend icon" /><span>SleepBlend</span></a>
-        <p class="foot-tag">Sleep sounds that play all night. Offline, private, and $1.99 once.</p>
+        <p class="foot-tag">Sleep sounds that play all night. Offline, private, and $2.99 once.</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
