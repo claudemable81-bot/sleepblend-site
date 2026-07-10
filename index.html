@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>SleepBlend — Sleep sounds that play all night. Pay once.</title>
 <meta name="description" content="SleepBlend plays relaxing sound mixes all night on Android. No ads, no subscription, no account, fully offline. One-time $2.99." />
 <meta name="theme-color" content="#0A0E1A" id="themeColorMeta" />
@@ -169,6 +169,52 @@
     transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
   .nav-cta:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), var(--shadow-md); }
+
+  /* z-index scale: content(1) < sticky header(50) sits above the menu(45) so its bar stays interactive */
+  .nav-toggle {
+    display: none; width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+    border: 1px solid var(--border-2); background: var(--surface-flat); color: var(--body);
+    align-items: center; justify-content: center; cursor: pointer;
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .nav-toggle:hover { color: var(--heading); border-color: var(--accent-1); }
+  .nav-toggle svg { width: 21px; height: 21px; }
+  .nav-toggle .ex { display: none; }
+  .nav-toggle[aria-expanded="true"] .bars { display: none; }
+  .nav-toggle[aria-expanded="true"] .ex { display: block; }
+
+  .mobile-menu { position: fixed; inset: 0; z-index: 45; }
+  .mm-scrim {
+    position: absolute; inset: 0; width: 100%; border: none; cursor: pointer;
+    background: rgba(4,7,14,0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .mm-sheet {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: calc(66px + 14px) 18px calc(20px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 3px;
+    background: var(--surface-flat); border-bottom: 1px solid var(--border-2);
+    box-shadow: var(--shadow-md);
+  }
+  /* The menu is visible whenever it isn't [hidden]; .open only *plays* the entrance,
+     so a throttled rAF / headless render degrades to instantly-visible, never blank. */
+  .mobile-menu.open .mm-scrim { animation: mm-scrim-in 0.3s var(--ease); }
+  .mobile-menu.open .mm-sheet { animation: mm-sheet-in 0.34s var(--ease); }
+  @keyframes mm-scrim-in { from { opacity: 0; } }
+  /* transform-only: the sheet stays fully opaque, so a frozen/headless render shows it shifted, never invisible */
+  @keyframes mm-sheet-in { from { transform: translateY(-16px); } }
+  .mm-link {
+    padding: 15px 14px; border-radius: 11px; color: var(--body);
+    font-family: var(--font-display); font-weight: 500; font-size: 1.08rem;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .mm-link:hover, .mm-link:focus-visible { background: var(--surface); color: var(--heading); outline: none; }
+  .mm-cta {
+    margin-top: 12px; text-align: center; padding: 15px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--indigo-500), var(--indigo-400)); color: #fff;
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), var(--shadow-sm);
+  }
+  body.no-scroll { overflow: hidden; }
 
   .theme-toggle {
     width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%;
@@ -581,7 +627,8 @@
     .features, .features-top, .blend-grid { grid-template-columns: 1fr; }
     .showcase-row { grid-template-columns: 1fr; gap: 38px; }
     .phone { width: 272px; height: 566px; }
-    .nav-cta { padding: 8px 14px; font-size: 0.83rem; }
+    .nav-cta { display: none; }
+    .nav-toggle { display: inline-flex; }
     .cat-badges { gap: 18px 14px; }
     .sbadge { width: 84px; }
     .sbadge .circ { width: 70px; height: 70px; }
@@ -621,9 +668,27 @@
         <svg class="moon-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a7 7 0 108.5 10.5z"/></svg>
       </button>
       <a class="nav-cta" href="mailto:makecoolstuff8@gmail.com?subject=Notify%20me%20when%20SleepBlend%20launches">Get notified at launch</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg class="bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="ex" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <button class="mm-scrim" id="mmScrim" aria-label="Close menu" tabindex="-1"></button>
+  <nav class="mm-sheet" aria-label="Site navigation">
+    <a class="mm-link" href="#reliability">All-night</a>
+    <a class="mm-link" href="#sounds">Sounds</a>
+    <a class="mm-link" href="#blends">Blends</a>
+    <a class="mm-link" href="#pricing">Pricing</a>
+    <a class="mm-link" href="#faq">FAQ</a>
+    <a class="mm-link" href="#privacy">Privacy</a>
+    <a class="mm-cta" href="mailto:makecoolstuff8@gmail.com?subject=Notify%20me%20when%20SleepBlend%20launches">Get notified at launch</a>
+  </nav>
+</div>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
@@ -1073,6 +1138,37 @@
     else { root.setAttribute('data-theme', 'light'); try { localStorage.setItem('sb-theme', 'light'); } catch (e) {} }
     applyThemeSide();
   });
+
+  // Mobile menu
+  (function () {
+    const btn = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    let isOpen = false;
+
+    function open() {
+      isOpen = true;
+      menu.hidden = false;          // visible immediately (default styles), no rAF dependency
+      menu.classList.add('open');   // plays the entrance animation as pure enhancement
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('no-scroll');
+    }
+    function close() {
+      isOpen = false;
+      menu.classList.remove('open');
+      menu.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('no-scroll');
+    }
+    btn.addEventListener('click', () => (isOpen ? close() : open()));
+    menu.addEventListener('click', (e) => {
+      if (e.target.closest('.mm-scrim, .mm-link, .mm-cta')) close();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen) { close(); btn.focus(); } });
+    window.addEventListener('resize', () => { if (isOpen && window.innerWidth > 620) close(); });
+  })();
 
   // Header scroll state
   const header = document.getElementById('header');
