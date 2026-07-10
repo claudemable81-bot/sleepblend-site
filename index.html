@@ -12,7 +12,7 @@
 <meta property="og:image" content="moon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script>
   // Apply saved theme before paint to avoid a flash
   (function () {
@@ -75,7 +75,8 @@
     --radius: 20px;
     --maxw: 1120px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --font-display: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;   /* display headings — calm, nocturnal voice */
+    --font-display: 'Manrope', 'Segoe UI', system-ui, sans-serif;  /* UI chrome: nav, buttons, labels */
     --font-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
   }
 
@@ -127,11 +128,13 @@
   }
 
   h1, h2, h3 {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
     color: var(--heading);
-    line-height: 1.22;
-    letter-spacing: -0.02em;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
     font-weight: 600;
+    font-optical-sizing: auto;
+    text-wrap: balance;
   }
   a { color: inherit; text-decoration: none; }
 
@@ -252,10 +255,7 @@
   .moon-stage img { width: 108px; height: 108px; border-radius: 26px; display: block; box-shadow: 0 16px 44px rgba(0,0,0,0.4); }
 
   .hero h1 { font-size: clamp(2.5rem, 5vw, 3.9rem); line-height: 1.13; margin-bottom: 30px; max-width: 15ch; }
-  .hero h1 .accent {
-    background: linear-gradient(115deg, var(--accent-1), var(--accent-2));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
+  .hero h1 .accent { color: var(--accent-1); font-style: italic; }
   .hero .sub { font-size: clamp(1.02rem, 1.8vw, 1.16rem); color: var(--body); max-width: 42ch; margin-bottom: 44px; }
 
   .cta-row { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
@@ -348,7 +348,7 @@
     background: var(--surface-flat); border: 1px solid var(--border);
     box-shadow: inset 0 1px 0 var(--edge), var(--shadow-sm);
   }
-  .num .n { font-family: var(--font-display); font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 600; color: var(--heading); letter-spacing: -0.02em; line-height: 1.15; }
+  .num .n { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 600; color: var(--heading); letter-spacing: -0.01em; line-height: 1.15; }
   .num .l { font-size: 0.86rem; color: var(--muted); margin-top: 6px; }
 
   /* Compare */
@@ -515,7 +515,7 @@
     color: var(--accent-2); background: rgba(125,211,252,0.1);
     border: 1px solid rgba(125,211,252,0.32); border-radius: 999px; padding: 4px 11px; white-space: nowrap;
   }
-  .amt { font-family: var(--font-display); font-size: 2.9rem; font-weight: 600; color: var(--heading); letter-spacing: -0.03em; line-height: 1; }
+  .amt { font-family: var(--font-serif); font-size: 3rem; font-weight: 600; color: var(--heading); letter-spacing: -0.01em; line-height: 1; }
   .amt .per { font-size: 1rem; color: var(--muted); font-weight: 500; letter-spacing: 0; font-family: var(--font-body); }
   .price-card .sub2 { margin: 14px 0 26px; color: var(--muted); font-size: 0.96rem; }
   .price-card ul.inc { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 11px 16px; }
@@ -735,7 +735,6 @@
 <section class="band band-alt" id="reliability">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">The complaint that shows up again and again</span>
       <h2>Most sleep apps go quiet at 3am.</h2>
       <p>Many sleep app reviews tell the same story: the sound stops overnight. Android suspends apps to save battery — so SleepBlend runs as a foreground media service with a wake lock, built to keep playing until morning.</p>
     </div>
@@ -775,7 +774,6 @@
 <section class="band" id="features">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">What's inside</span>
       <h2>Quality over quantity</h2>
       <p>Fifteen excellent sounds and the tools to make the one you love yours forever.</p>
     </div>
@@ -843,7 +841,6 @@
 <section class="band">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">A look inside</span>
       <h2>Calm to use, night after night</h2>
     </div>
     <div class="showcase-row">
@@ -870,7 +867,6 @@
 <section class="band band-alt" id="sounds">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">The library</span>
       <h2>Fifteen sounds, tuned for the night</h2>
       <p>Grouped the way you think of them. Tap any sound to hear a ten-second loop, right here.</p>
     </div>
@@ -931,7 +927,6 @@
 <section class="band" id="blends">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Ready-made mixes</span>
       <h2>Six favorite blends</h2>
       <p>Tap play — your browser mixes the real sounds at the app's real levels, exactly like the app does.</p>
     </div>
@@ -960,7 +955,6 @@
 <section class="band-lg band-alt" id="pricing">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Pricing</span>
       <h2>Pay once. That's the whole price.</h2>
       <p>Most sleep-sound apps charge every year, forever. SleepBlend charges once and is yours for good.</p>
     </div>
@@ -995,7 +989,6 @@
 <section class="band" id="faq">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Honest answers</span>
       <h2>Questions people actually ask</h2>
     </div>
     <div class="faq-list">
