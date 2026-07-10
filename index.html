@@ -267,14 +267,34 @@
     transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
   .play-badge:hover { transform: translateY(-2px); border-color: rgba(148,163,184,0.55); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 12px 34px rgba(76,110,245,0.4); }
-  .play-badge.soon { cursor: default; }
-  .play-badge.soon:hover { transform: none; border-color: rgba(148,163,184,0.32); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 26px rgba(76,110,245,0.28); }
+  /* Not a live store link yet: dim + flat so it doesn't invite a tap; the notify link beside it is the action */
+  .play-badge.soon { cursor: default; opacity: 0.72; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+  .play-badge.soon:hover { transform: none; border-color: rgba(148,163,184,0.32); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
   .notify-link {
     display: inline-flex; align-items: center; gap: 7px;
     color: var(--accent-2); font-size: 0.95rem; font-weight: 600;
     transition: opacity 0.25s var(--ease);
   }
   .notify-link:hover { opacity: 0.8; }
+  /* Keyboard focus ring (elements with bespoke focus keep theirs via higher specificity) */
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent-1); outline-offset: 2px; border-radius: 8px;
+  }
+  input[type="range"].warmth:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 4px; }
+  p, .fa { text-wrap: pretty; }
+  /* Stop-all-audio control, shown only while a preview is playing */
+  .stop-audio {
+    position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+    z-index: 46; display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 999px; cursor: pointer;
+    background: var(--surface-flat); color: var(--heading); border: 1px solid var(--border-2);
+    box-shadow: var(--shadow-md); font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+    animation: stop-in 0.25s var(--ease);
+  }
+  .stop-audio[hidden] { display: none; }
+  .stop-audio svg { width: 13px; height: 13px; color: var(--accent-2); }
+  .stop-audio:hover { border-color: var(--accent-1); }
+  @keyframes stop-in { from { opacity: 0; transform: translate(-50%, 10px); } }
   .play-badge .ptext { text-align: left; line-height: 1.15; }
   .play-badge .pt-small { font-size: 0.64rem; letter-spacing: 0.09em; text-transform: uppercase; color: #cfd6e4; }
   .play-badge .pt-big { font-size: 1.24rem; color: #fff; font-weight: 600; font-family: var(--font-display); }
@@ -690,7 +710,7 @@
       <h1 class="reveal">Sleep sounds that <span class="accent">play all night.</span></h1>
       <p class="sub reveal">An offline Android sound mixer built to keep playing until morning. No ads. No subscription. No account.</p>
       <div class="cta-row reveal">
-        <span class="play-badge soon" aria-label="Coming soon to Google Play">
+        <span class="play-badge soon" role="img" aria-disabled="true" aria-label="Coming soon to Google Play">
           <svg width="26" height="28" viewBox="0 0 512 512" aria-hidden="true"><path fill="#00D3FF" d="M47 24C40 28 36 36 36 47v418c0 11 4 19 11 23l236-232L47 24z"/><path fill="#00F076" d="M47 24l236 232 66-65L83 12C69 4 56 6 47 24z"/><path fill="#FF3A44" d="M349 191l-66 65 66 65 84-49c17-12 17-32 0-44l-84-37z"/><path fill="#FFC800" d="M283 256L47 488c9 18 22 20 36 12l266-154-66-90z"/></svg>
           <span class="ptext"><span class="pt-small">Coming soon to</span><span class="pt-big">Google Play</span></span>
         </span>
@@ -1020,7 +1040,7 @@
     <h2>Fall asleep to your sound tonight.</h2>
     <p>Buy it once. Set your mix. Sleep.</p>
     <div class="cta-row">
-      <span class="play-badge soon" aria-label="Coming soon to Google Play">
+      <span class="play-badge soon" role="img" aria-disabled="true" aria-label="Coming soon to Google Play">
         <svg width="26" height="28" viewBox="0 0 512 512" aria-hidden="true"><path fill="#00D3FF" d="M47 24C40 28 36 36 36 47v418c0 11 4 19 11 23l236-232L47 24z"/><path fill="#00F076" d="M47 24l236 232 66-65L83 12C69 4 56 6 47 24z"/><path fill="#FF3A44" d="M349 191l-66 65 66 65 84-49c17-12 17-32 0-44l-84-37z"/><path fill="#FFC800" d="M283 256L47 488c9 18 22 20 36 12l266-154-66-90z"/></svg>
         <span class="ptext"><span class="pt-small">Coming soon to</span><span class="pt-big">Google Play</span></span>
       </span>
@@ -1064,6 +1084,11 @@
     <p class="disclaimer">Brainwave beats are provided for relaxation only and are not a medical treatment. SleepBlend makes no health or medical claims.</p>
   </div>
 </footer>
+
+<button class="stop-audio" id="stopAudio" hidden>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+  Stop sound
+</button>
 
 <script>
   const root = document.documentElement;
@@ -1111,6 +1136,27 @@
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen) { close(); btn.focus(); } });
     window.addEventListener('resize', () => { if (isOpen && window.innerWidth > 620) close(); });
+  })();
+
+  // Stop-all-audio control — visible only while a preview is playing.
+  // Watches the .playing class (decoupled from the audio modules) so it can't desync.
+  (function () {
+    const btn = document.getElementById('stopAudio');
+    if (!btn) return;
+    const sel = '.blend-card.playing, .sbadge.playing, .nd-play.playing';
+    const refresh = () => { btn.hidden = !document.querySelector(sel); };
+    const scopes = ['#sounds', '#blends'].map(s => document.querySelector(s)).filter(Boolean);
+    if ('MutationObserver' in window) {
+      const mo = new MutationObserver(refresh);
+      scopes.forEach(s => mo.observe(s, { subtree: true, attributes: true, attributeFilter: ['class'] }));
+    }
+    btn.addEventListener('click', () => {
+      if (window.__sbMixStop) window.__sbMixStop();
+      if (window.__sbNoiseStop) window.__sbNoiseStop();
+      refresh();
+    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) setTimeout(refresh, 60); });
+    refresh();
   })();
 
   // Header scroll state
