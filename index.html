@@ -69,7 +69,7 @@
     --border-2: rgba(165,184,255,0.16);
     --edge: rgba(255,255,255,0.06);
     --shadow-sm: 0 1px 2px rgba(2,6,16,0.4), 0 8px 20px rgba(2,6,16,0.3);
-    --shadow-md: 0 2px 4px rgba(2,6,16,0.45), 0 16px 38px rgba(2,6,16,0.38);
+    --shadow-md: 0 2px 4px rgba(2,6,16,0.45), 0 10px 19px rgba(2,6,16,0.4);
     --them-bg: rgba(30,41,59,0.28);
 
     --radius: 20px;
@@ -108,7 +108,7 @@
     --border-2: rgba(15,23,42,0.11);
     --edge: rgba(255,255,255,0.9);
     --shadow-sm: 0 1px 2px rgba(15,23,42,0.05), 0 8px 20px rgba(15,23,42,0.06);
-    --shadow-md: 0 2px 4px rgba(15,23,42,0.06), 0 16px 38px rgba(15,23,42,0.1);
+    --shadow-md: 0 2px 4px rgba(15,23,42,0.06), 0 10px 19px rgba(15,23,42,0.11);
     --them-bg: rgba(15,23,42,0.03);
   }
 
@@ -375,13 +375,14 @@
   .us .ic { color: var(--accent-2); }
   .them .ic { color: var(--muted); }
   .badge-ico { width: 21px; height: 21px; }
-  .compat-note { text-align: center; margin-top: 30px; font-size: 0.88rem; color: var(--muted); opacity: 0.9; }
+  .compat-note { text-align: center; margin: 30px auto 0; max-width: 65ch; font-size: 0.88rem; color: var(--muted); opacity: 0.9; }
 
   /* Features — four primary cards + a compact "also included" list */
   .features-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .feature-lg { padding: 28px 24px; }
-  .feature-lg .icon { width: 46px; height: 46px; }
-  .feature-lg .icon svg { width: 22px; height: 22px; }
+  .feature-lg .f-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .feature-lg .icon { width: 34px; height: 34px; margin-bottom: 0; flex-shrink: 0; }
+  .feature-lg .icon svg { width: 17px; height: 17px; }
   .feature-lg h3 { font-size: 1.06rem; }
   .more-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 44px; max-width: 62rem; margin: 46px auto 0; }
   .more-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.97rem; line-height: 1.55; color: var(--body); }
@@ -554,11 +555,12 @@
   /* Privacy */
   .privacy { background: var(--privacy-bg); transition: background 0.4s var(--ease); }
   .privacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 5vw, 64px); align-items: center; }
-  .privacy h2 { font-size: clamp(1.6rem, 3.1vw, 2.3rem); margin-bottom: 18px; }
+  .privacy .p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .privacy h2 { font-size: clamp(1.6rem, 3.1vw, 2.3rem); margin-bottom: 0; }
   .privacy .pcopy p { color: var(--muted); font-size: 1.03rem; max-width: 40ch; }
   .privacy .lock {
-    width: 54px; height: 54px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;
-    border-radius: 16px; background: rgba(125,211,252,0.08); border: 1px solid rgba(125,211,252,0.2);
+    width: 42px; height: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    border-radius: 13px; background: rgba(125,211,252,0.08); border: 1px solid rgba(125,211,252,0.2);
   }
 
   .manifest {
@@ -607,7 +609,7 @@
   .foot .brand img { width: 36px; height: 36px; }
   .foot-tag { color: var(--muted); font-size: 0.9rem; margin-top: 13px; max-width: 30ch; }
   .foot-links { display: flex; gap: 56px; flex-wrap: wrap; }
-  .foot-col h4 { color: var(--body); font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 15px; font-weight: 700; font-family: var(--font-display); }
+  .foot-col .foot-h { color: var(--body); font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 15px; font-weight: 700; font-family: var(--font-display); }
   .foot-col a, .foot-col span { display: block; color: var(--muted); font-size: 0.92rem; margin-bottom: 10px; transition: color 0.25s var(--ease); }
   .foot-col a:hover { color: var(--heading); }
   .foot-bottom { margin-top: 42px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 0.84rem; }
@@ -635,7 +637,7 @@
     .nav-links { display: none; }
     .features-top, .blend-grid { grid-template-columns: 1fr; }
     .showcase-row { grid-template-columns: 1fr; gap: 38px; }
-    .phone { width: 272px; height: 566px; }
+    .phone { width: 272px; }
     .nav-cta { display: none; }
     .nav-toggle { display: inline-flex; }
     .cat-badges { gap: 18px 14px; }
@@ -776,23 +778,19 @@
     </div>
     <div class="features-top">
       <div class="card cardbase feature-lg">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 019.5 4a7 7 0 108.5 10.5z"/></svg></div>
-        <h3>Plays all night</h3>
+        <div class="f-head"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 019.5 4a7 7 0 108.5 10.5z"/></svg></div><h3>Plays all night</h3></div>
         <p>A foreground service and wake lock keep your mix going until morning.</p>
       </div>
       <div class="card cardbase feature-lg">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C8FF8" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2.4" fill="#0A0E1A"/><circle cx="15" cy="12" r="2.4" fill="#0A0E1A"/><circle cx="7" cy="18" r="2.4" fill="#0A0E1A"/></svg></div>
-        <h3>Layered mixer</h3>
+        <div class="f-head"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C8FF8" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2.4" fill="#0A0E1A"/><circle cx="15" cy="12" r="2.4" fill="#0A0E1A"/><circle cx="7" cy="18" r="2.4" fill="#0A0E1A"/></svg></div><h3>Layered mixer</h3></div>
         <p>Blend up to 10 sounds with individual volume sliders.</p>
       </div>
       <div class="card cardbase feature-lg">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v12H4z"/><path d="M4 7l3-3h10l3 3"/><path d="M9 12h6"/></svg></div>
-        <h3>Save your blends</h3>
+        <div class="f-head"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v12H4z"/><path d="M4 7l3-3h10l3 3"/><path d="M9 12h6"/></svg></div><h3>Save your blends</h3></div>
         <p>Name a mix once, replay it in one tap every night.</p>
       </div>
       <div class="card cardbase feature-lg">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#67E8F9" stroke-width="1.7" stroke-linecap="round"><path d="M3 12c3-7 6-7 9 0s6 7 9 0"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" opacity="0.5"/></svg></div>
-        <h3>Tunable noise</h3>
+        <div class="f-head"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#67E8F9" stroke-width="1.7" stroke-linecap="round"><path d="M3 12c3-7 6-7 9 0s6 7 9 0"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" opacity="0.5"/></svg></div><h3>Tunable noise</h3></div>
         <p>A warmth slider morphs live noise from bright white to deep brown.</p>
       </div>
     </div>
@@ -998,10 +996,12 @@
 <section class="band-lg privacy" id="privacy">
   <div class="wrap privacy-grid">
     <div class="pcopy reveal">
-      <div class="lock">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/><circle cx="12" cy="16" r="1.3" fill="#7DD3FC"/></svg>
+      <div class="p-head">
+        <div class="lock">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/><circle cx="12" cy="16" r="1.3" fill="#7DD3FC"/></svg>
+        </div>
+        <h2>Your data can't leave your phone.</h2>
       </div>
-      <h2>Your data can't leave your phone.</h2>
       <p>SleepBlend can't break your privacy even if it wanted to, because it never requests the Internet permission. There's nothing to trust and nothing to audit: it runs no analytics, keeps no account, shows no ads, and tracks nothing. Mic recordings never leave the device.</p>
     </div>
     <div class="manifest reveal" aria-label="The app's Android manifest, showing no internet permission">
@@ -1059,20 +1059,20 @@
       </div>
       <div class="foot-links">
         <div class="foot-col">
-          <h4>App</h4>
+          <p class="foot-h">App</p>
           <a href="#reliability">All-night reliability</a>
           <a href="#sounds">Sounds</a>
           <a href="#pricing">Pricing</a>
           <span>Coming soon to Google Play</span>
         </div>
         <div class="foot-col">
-          <h4>Privacy</h4>
+          <p class="foot-h">Privacy</p>
           <a href="#privacy">Privacy overview</a>
           <a href="privacy.html">Privacy policy</a>
           <span>No data collected</span>
         </div>
         <div class="foot-col">
-          <h4>Contact</h4>
+          <p class="foot-h">Contact</p>
           <a href="mailto:makecoolstuff8@gmail.com">makecoolstuff8@gmail.com</a>
         </div>
       </div>
